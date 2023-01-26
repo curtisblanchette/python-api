@@ -15,6 +15,11 @@ transactions = [
 ]
 
 
+@app.route('/')
+def get_index():
+    return '', 204
+
+
 @app.route('/incomes')
 def get_incomes():
     schema = IncomeSchema(many=True)
