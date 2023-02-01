@@ -1,14 +1,16 @@
 from locust import HttpUser, between, task
-
 import random
+
+from dynaconf import settings
 
 
 class WebsiteUser(HttpUser):
     wait_time = between(5, 15)
+    host = settings.host + ':' + settings.port
 
     def on_start(self):
         self.client.post("/expenses", {
-            "description": "salary",
+            "description": "Walmart",
             "amount": 25123
         })
 

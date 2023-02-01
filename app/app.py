@@ -1,11 +1,17 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
+from dynaconf import FlaskDynaconf
 
+from app.models.expense import ExpenseSchema, Expense
+from app.models.income import IncomeSchema, Income
+from app.models.transaction_type import TransactionType
 
-from module1.model.expense import Expense, ExpenseSchema
-from module1.model.income import Income, IncomeSchema
-from module1.model.transaction_type import TransactionType
+import os
+import pprint
 
 app = Flask(__name__)
+# this module bakes our dynaconf settings into the Flask app
+# placing them on app.config
+FlaskDynaconf(app, settings_files=["settings.toml"])
 
 transactions = [
     Income('Salary', 5000),
@@ -17,7 +23,8 @@ transactions = [
 
 @app.route('/')
 def get_index():
-    return '', 204
+    # renders a template with delimited replacements
+    return render_template('index.html', name="Flask", config=app.config)
 
 
 @app.route('/incomes')
@@ -54,5 +61,10 @@ def add_expense():
 
 # allows the code to execute when run as a script
 # but not when imported as a module.
-if __name__ == 'main':
-    app.run()
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    host = str(os.environ.get('HOST', '0.0.0.0'))
+    app.run(port=port, host=host)
+
+
+

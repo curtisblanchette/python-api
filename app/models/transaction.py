@@ -3,7 +3,7 @@ import datetime as dt
 from marshmallow import Schema, fields
 
 
-class Transaction():
+class Transaction:
     def __init__(self, description, amount, type):
         self.description = description
         self.amount = amount
@@ -14,6 +14,7 @@ class Transaction():
         return '<Transaction(name={self.description!r})>'.format(self=self)
 
 
+# defines a schema for a transaction
 class TransactionSchema(Schema):
     description = fields.Str()
     amount = fields.Number()

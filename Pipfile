@@ -7,6 +7,8 @@ name = "pypi"
 flask = "*"
 marshmallow = "*"
 locust = "*"
+dynaconf = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
