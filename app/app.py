@@ -4,9 +4,9 @@ from dynaconf import FlaskDynaconf
 from app.models.expense import ExpenseSchema, Expense
 from app.models.income import IncomeSchema, Income
 from app.models.transaction_type import TransactionType
+from wtforms import Form, StringField, PasswordField
 
 import os
-import pprint
 
 app = Flask(__name__)
 # this module bakes our dynaconf settings into the Flask app
@@ -21,10 +21,28 @@ transactions = [
 ]
 
 
+class LoginForm(Form):
+    username = StringField('Username')
+    password = PasswordField('Password')
+
+
 @app.route('/')
 def get_index():
     # renders a template with delimited replacements
-    return render_template('index.html', name="Flask", config=app.config)
+    form = LoginForm()
+    return render_template('index.html', name="Flask", form=form)
+
+
+@app.route('/login', methods=["POST"])
+def login():
+    print(request.get_data())
+    # form: MultiDict contains the raw form parameters
+    form = LoginForm(request.form)
+
+    if form.validate():
+        return 'Logged In', 200
+
+
 
 
 @app.route('/incomes')

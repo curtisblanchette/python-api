@@ -6,7 +6,16 @@
     <title>Flask App</title>
 </head>
 <body>
-<h1>Welcome to the {{name}} App!</h1>
-<pre>{{config.number}}</pre>
+
+    <h1>Welcome to the {{name}} App!</h1>
+    This forms was generated using `wtforms` python package.
+    <form method="POST" action="/login">
+        <div>
+            {{ form.username.label }}: {{ form.username() }} <br>
+            {{ form.password.label }}: {{ form.password() }}
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+
 </body>
 </html>
